@@ -17,17 +17,6 @@ window.onload = function(){
 }
 
 function setMines() {
-    // minesLoctions.push("2-2");
-    
-    // minesLoctions.push("3-7");
-    
-    // minesLoctions.push("4-4");
-    
-    // minesLoctions.push("1-5");
-    
-    // minesLoctions.push("6-3");
-
-
     
     let minesLeft = miansCount;
     while (minesLeft > 0) { 
@@ -46,6 +35,8 @@ function startGame(){
     document.getElementById("mines-count").innerText = miansCount;
     document.getElementById("flag-buttun").addEventListener("click" , setFlag)
     setMines();
+
+    //هنا خليهناه يصف المربعات
     for (let r = 0; r < rows; r++) {
         let row  = [];
 
@@ -54,9 +45,9 @@ function startGame(){
             tile.id = r.toString() + "-" + c.toString();
             tile.addEventListener("click",clickTile)
             document.getElementById("board").append(tile);
-            row.push(tile);
+            row.push(tile);// بعدين يضيفهن علة الصف
         }
-        board.push(row)
+        board.push(row) // يضيف الصفوف على اللوح
     }
 
     console.log(board);
@@ -83,7 +74,8 @@ function clickTile() {
     if (gameOver || this.classList.contains("tile-clicked")) {
         return;
     }
-    let tile = this;
+    let tile = this;// this is return to tile that clickid!!
+    
 
     if (flagEnable) {
         if (tile.innerText == "") {
@@ -97,7 +89,7 @@ function clickTile() {
   
 
     if (minesLoctions.includes(tile.id)) {
-        // alert("Game Over")
+        
         gameOver = true;
         revealMines();
         return;
@@ -119,7 +111,7 @@ function revealMines() {
                 tile.innerText = "💣";
                 tile.style.backgroundColor="red"
             }
-        }
+        }// when you click mines well represnt the all mines
     }
     
 }
@@ -130,7 +122,7 @@ function chickMines(r,c) {
     }
 
     if (board[r][c].classList.contains("tile-clicked")) {
-        return;
+        return;// just return here for no recersive and no enter to the logic of function
     }
 
 
@@ -153,7 +145,7 @@ function chickMines(r,c) {
     minesFOund += checkTile(r+1 , c);
     minesFOund += checkTile(r+1 , c+1);
 
-    if (minesFOund > 0) {
+    if (minesFOund > 0) {// to show how mutch of mines is found!
         board[r][c].innerText = minesFOund;
         board[r][c].classList.add("x"+ minesFOund.toString());
     }else {
@@ -178,7 +170,7 @@ function chickMines(r,c) {
     }
 
     if (tileclicked == rows * colmuns - miansCount) {
-        document.getElementById("mines-count").innerText = "Cleared";
+        document.getElementById("mines-count").innerText = "Win";
         gameOver = true;
     }
 
